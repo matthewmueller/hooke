@@ -64,12 +64,23 @@ describe('hook-ware', function() {
     var run = hooks.run('resolve', 'a', 'b');
 
     run(function(err, a, b) {
+      assert(!err);
       assert('a' == a);
       assert('b' == b);
       assert(2 == called);
       done();
     });
 
+  })
+
+  it('should work on unused hooks', function(done) {
+    var hooks = Hooks();
+    hooks.run('test', 'a', 'b', function(err, a, b) {
+      assert(!err);
+      assert('a' == a);
+      assert('b' == b);
+      done();
+    })
   })
 
 });
