@@ -1,0 +1,16 @@
+{
+  "name": "hook-ware",
+  "version": "0.0.1",
+  "description": "hook system using middleware",
+  "keywords": [],
+  "author": "Matthew Mueller <mattmuelle@gmail.com>",
+  "repository": { "type": "git", "url": "git://github.com/MatthewMueller/hook-ware.git" },
+  "dependencies": {
+    "ware": "1.1.x",
+    "yieldly": "0.0.1"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "main": "index"
+}
