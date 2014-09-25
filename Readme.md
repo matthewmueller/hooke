@@ -57,6 +57,35 @@ Initialize `hook-ware`.
 
 Add a hook to the plugin `name`. The `fn` can be a synchronous, asynchronous, generator function, or anything else that [ware](http://github.com/segmentio/ware) supports.
 
+### `Hooks.method(name)`
+
+Add a method `name` to add hooks more fluently. You can add methods statically that get applied to all hooks instances or on each instance.
+
+```js
+var hooks = Hooks()
+  .method('install')
+  .method('build');
+
+hooks.install(fn);
+hooks.build(fn);
+
+hooks.run('install', done);
+```
+
+Or statically:
+
+```js
+Hooks.method('fetch')
+
+var hooks = Hooks()
+  .method('build');
+
+hooks.fetch(fn);
+hooks.build(fn);
+
+hooks.run('fetch', done)
+```
+
 ### `Hooks.run(name, args..., [fn])`
 
 Run the hooks for `name`, passing a number of `args` in. Optionally pass a callback function. If no callback function is specified, hook-ware will return a thunk that can be yielded.

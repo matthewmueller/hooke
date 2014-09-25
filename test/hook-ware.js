@@ -83,4 +83,69 @@ describe('hook-ware', function() {
     })
   })
 
+  it('should support hook methods', function(done) {
+    var hooks = Hooks()
+      .method('resolve')
+      .method('fetch');
+
+    var called = 0;
+
+    hooks.resolve(function(a, b, fn) {
+      assert('a' == a);
+      assert('b' == b);
+      called++;
+      fn();
+    });
+
+    hooks.resolve(function(a, b) {
+      assert('a' == a);
+      assert('b' == b);
+      called++;
+    });
+
+    hooks.fetch(function(a, b) {
+      called++;
+    });
+
+    hooks.run('resolve', 'a', 'b', function(err, a, b) {
+      assert('a' == a);
+      assert('b' == b);
+      assert(2 == called);
+      done();
+    });
+  })
+
+  it('should support static hook methods', function(done) {
+    Hooks.method('install');
+
+    var hooks = Hooks()
+      .method('fetch');
+
+    var called = 0;
+
+    hooks.install(function(a, b, fn) {
+      assert('a' == a);
+      assert('b' == b);
+      called++;
+      fn();
+    });
+
+    hooks.install(function(a, b) {
+      assert('a' == a);
+      assert('b' == b);
+      called++;
+    });
+
+    hooks.fetch(function(a, b) {
+      called++;
+    });
+
+    hooks.run('install', 'a', 'b', function(err, a, b) {
+      assert('a' == a);
+      assert('b' == b);
+      assert(2 == called);
+      done();
+    });
+  })
+
 });

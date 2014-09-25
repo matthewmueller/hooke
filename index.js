@@ -40,6 +40,30 @@ Hooks.prototype.use = function(name, fn) {
 };
 
 /**
+ * Add a hook methods
+ *
+ * @param {String} name
+ * @return {Hooks}
+ * @api public
+ */
+
+Hooks.prototype.method =
+Hooks.method = function(name) {
+  if ('run' == name || 'use' == name) {
+    throw Error('cannot name hook after existing method');
+  }
+
+  var instance = this.prototype || this;
+
+  // create the method
+  instance[name] = function(fn) {
+    return this.use(name, fn);
+  };
+
+  return this;
+}
+
+/**
  * Run the hooks
  *
  * @param {String} name
