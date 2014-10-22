@@ -21,7 +21,7 @@ module.exports = Hooks;
 
 function Hooks() {
   if (!(this instanceof Hooks)) return new Hooks();
-  this.hooks = [];
+  this.hooks = {};
 }
 
 /**
