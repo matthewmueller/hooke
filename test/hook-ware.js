@@ -11,141 +11,108 @@ var assert = require('assert');
 
 describe('hook-ware', function() {
 
-  it('should run the hooks based on events', function(done) {
-    var hooks = Hooks();
-    var called = 0;
+  describe('mixin', function() {
+    it('should support mixins', function (done) {
+      var called = 0;
+      var obj = {};
+      Hooks(obj);
 
-    hooks.use('resolve', function(a, b, fn) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-      fn();
-    });
+      obj.hook('resolve', function(a, b) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+      });
 
-    hooks.use('resolve', function(a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-    });
+      obj.hook('resolve', function(a, b) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+      });
 
-    hooks.use('fetch', function(a, b) {
-      called++;
-    })
-
-    hooks.run('resolve', 'a', 'b', function(err, a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      assert(2 == called);
-      done();
-    });
-  });
-
-  it('return a thunk if no callback passed', function(done) {
-    var hooks = Hooks();
-    var called = 0;
-
-    hooks.use('resolve', function(a, b, fn) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-      fn();
-    });
-
-    hooks.use('resolve', function(a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-    });
-
-    hooks.use('fetch', function(a, b) {
-      called++;
-    })
-
-    var run = hooks.run('resolve', 'a', 'b');
-
-    run(function(err, a, b) {
-      assert(!err);
-      assert('a' == a);
-      assert('b' == b);
-      assert(2 == called);
-      done();
-    });
-
-  })
-
-  it('should work on unused hooks', function(done) {
-    var hooks = Hooks();
-    hooks.run('test', 'a', 'b', function(err, a, b) {
-      assert(!err);
-      assert('a' == a);
-      assert('b' == b);
-      done();
-    })
-  })
-
-  it('should support hook methods', function(done) {
-    var hooks = Hooks()
-      .method('resolve')
-      .method('fetch');
-
-    var called = 0;
-
-    hooks.resolve(function(a, b, fn) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-      fn();
-    });
-
-    hooks.resolve(function(a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-    });
-
-    hooks.fetch(function(a, b) {
-      called++;
-    });
-
-    hooks.run('resolve', 'a', 'b', function(err, a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      assert(2 == called);
-      done();
+      obj.trigger('resolve', 'a', 'b', function(err, a, b) {
+        assert(!err);
+        assert('a' == a);
+        assert('b' == b);
+        assert(2 == called);
+        done();
+      });
     });
   })
 
-  it('should support static hook methods', function(done) {
-    Hooks.method('install');
+  describe('standalone', function() {
+    it('should run the hooks based on events', function(done) {
+      var hooks = Hooks();
+      var called = 0;
 
-    var hooks = Hooks()
-      .method('fetch');
+      hooks.hook('resolve', function(a, b, fn) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+        fn();
+      });
 
-    var called = 0;
+      hooks.hook('resolve', function(a, b) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+      });
 
-    hooks.install(function(a, b, fn) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-      fn();
+      hooks.hook('fetch', function(a, b) {
+        called++;
+      })
+
+      hooks.trigger('resolve', 'a', 'b', function(err, a, b) {
+        assert(!err);
+        assert('a' == a);
+        assert('b' == b);
+        assert(2 == called);
+        done();
+      });
     });
 
-    hooks.install(function(a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      called++;
-    });
+    it('return a thunk if no callback passed', function(done) {
+      var hooks = Hooks();
+      var called = 0;
 
-    hooks.fetch(function(a, b) {
-      called++;
-    });
+      hooks.hook('resolve', function(a, b, fn) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+        fn();
+      });
 
-    hooks.run('install', 'a', 'b', function(err, a, b) {
-      assert('a' == a);
-      assert('b' == b);
-      assert(2 == called);
-      done();
-    });
+      hooks.hook('resolve', function(a, b) {
+        assert('a' == a);
+        assert('b' == b);
+        called++;
+      });
+
+      hooks.hook('fetch', function(a, b) {
+        called++;
+      })
+
+      var trigger = hooks.trigger('resolve', 'a', 'b');
+
+      var h = trigger(function(err, a, b) {
+        assert(!err);
+        assert('a' == a);
+        assert('b' == b);
+        assert(2 == called);
+        done();
+      });
+
+      assert(h == hooks);
+    })
+
+    it('should work on unused hooks', function(done) {
+      var hooks = Hooks();
+      hooks.trigger('test', 'a', 'b', function(err, a, b) {
+        assert(!err);
+        assert('a' == a);
+        assert('b' == b);
+        done();
+      })
+    })
   })
 
 });
