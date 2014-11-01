@@ -8,15 +8,15 @@
 ## Example
 
 ```js
-var hooks = Hooks();
+var Hook = require('hooke');
+var obj = {};
 
-// add the hooks
-hooks.use('resolve', fn);
-hooks.use('resolve', fn);
-hooks.use('fetch', fn);
+Hook(obj);
 
-// run the "fetch" hook
-hooks.run('fetch', 'a', 'b', done);
+obj.hook('resolve', fn);
+obj.hook('resolve', gen);
+
+obj.trigger('resolve', a, b, done);
 ```
 
 Or with generators:
