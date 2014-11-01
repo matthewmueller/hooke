@@ -1,4 +1,9 @@
 
+0.1.0 / 2014-11-01
+==================
+
+* Change API to be more similar to an Event Emitter.
+
 0.0.3 / 2014-10-22
 ==================
 
