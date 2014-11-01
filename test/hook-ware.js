@@ -9,7 +9,7 @@ var assert = require('assert');
  * Tests
  */
 
-describe('hook-ware', function() {
+describe('hooke', function() {
 
   describe('mixin', function() {
     it('should support mixins', function (done) {

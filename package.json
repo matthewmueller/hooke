@@ -1,12 +1,12 @@
 {
-  "name": "hook-ware",
+  "name": "hooke",
   "version": "0.0.3",
   "description": "hook system using middleware",
   "keywords": [],
   "author": "Matthew Mueller <mattmuelle@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/MatthewMueller/hook-ware.git"
+    "url": "git://github.com/MatthewMueller/hooke.git"
   },
   "dependencies": {
     "ware": "1.1.x",

@@ -1,9 +1,9 @@
 
-# hook-ware
+# Hooke
 
   A hook system using [ware](http://github.com/segmentio/ware) for the browser and server.
 
-  Hook-ware is gracefully handles generators when you're in an environment that supports them.
+  Hooke is gracefully handles generators when you're in an environment that supports them.
 
 ## Example
 
@@ -38,57 +38,36 @@ yield hooks.run('fetch', 'a', 'b');
 Node:
 
 ```bash
-$ npm install hook-ware
+$ npm install hooke
 ```
 
 Browser (with [Duo](http://duojs.org)):
 
 ```js
-var hooks = require('matthewmueller/hook-ware');
+var hooks = require('matthewmueller/hooke');
 ```
 
 ## API
 
 ### `Hooks()`
 
-Initialize `hook-ware`.
+Initialize `hooke`.
 
-### `Hooks.use(name, fn)`
+### `Hooks.hook(event, fn|gen)`
 
 Add a hook to the plugin `name`. The `fn` can be a synchronous, asynchronous, generator function, or anything else that [ware](http://github.com/segmentio/ware) supports.
 
-### `Hooks.method(name)`
+### `Hooks.trigger(event[, args, ...], [done])`
 
-Add a method `name` to add hooks more fluently. You can add methods statically that get applied to all hooks instances or on each instance.
+Trigger an event. Analagous to `Emitter.emit(...)`. Pass a variable number of `args`. Optionally pass a `done` function. Without a function `trigger` returns a generator you can yield on.
 
-```js
-var hooks = Hooks()
-  .method('install')
-  .method('build');
+### `Hooks.hook(event)`
 
-hooks.install(fn);
-hooks.build(fn);
+Get the hooks for an event
 
-hooks.run('install', done);
-```
+### `Hooks.unhook([event], [fn|gen])`
 
-Or statically:
-
-```js
-Hooks.method('fetch')
-
-var hooks = Hooks()
-  .method('build');
-
-hooks.fetch(fn);
-hooks.build(fn);
-
-hooks.run('fetch', done)
-```
-
-### `Hooks.run(name, args..., [fn])`
-
-Run the hooks for `name`, passing a number of `args` in. Optionally pass a callback function. If no callback function is specified, hook-ware will return a thunk that can be yielded.
+TODO. Will work the same way as `Emitter.off(...)`
 
 ## Test
 
