@@ -76,6 +76,19 @@ Hooks.prototype.trigger = yieldly(function(event) {
 });
 
 /**
+ * Hooks
+ *
+ * @param {String} event
+ * @return {Ware}
+ * @api public
+ */
+
+Hooks.prototype.hooks = function(event) {
+  this._hooks = this._hooks || {};
+  return this._hooks[event] || Ware();
+}
+
+/**
  * Unhook
  *
  * @param {String} event
