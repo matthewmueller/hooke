@@ -3,6 +3,8 @@
 
   Hooke is similar to an Event Emitter, but instead of event functions running independently, they are implemented as middleware with a callback function.
 
+  Hooke allows you to have a plugin system with asynchronous plugins that you can wait on to finish before moving on.
+
 ## Example
 
 ```js
