@@ -1,9 +1,7 @@
 
 # Hooke
 
-  A hook system using [ware](http://github.com/segmentio/ware) for the browser and server.
-
-  Hooke is gracefully handles generators when you're in an environment that supports them.
+  Hooke is similar to an Event Emitter, but instead of event functions running independently, they are implemented as middleware with a callback function.
 
 ## Example
 
