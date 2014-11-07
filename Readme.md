@@ -16,21 +16,11 @@ Hook(obj);
 obj.hook('resolve', fn);
 obj.hook('resolve', gen);
 
+// traditional callbacks
 obj.trigger('resolve', a, b, done);
-```
 
-Or with generators:
-
-```js
-var hooks = Hooks();
-
-// add the hooks
-hooks.use('resolve', fn);
-hooks.use('resolve', fn);
-hooks.use('fetch', fn);
-
-// run the "fetch" hook
-yield hooks.run('fetch', 'a', 'b');
+// or using a generator
+yield obj.trigger('resolve', a, b);
 ```
 
 ## Installation
